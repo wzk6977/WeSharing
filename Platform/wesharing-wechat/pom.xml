@@ -13,10 +13,54 @@
 
 	<!-- 添加依赖 -->
 	<dependencies>
-		<!--依赖model包，稍后需要需改为依赖service包 -->
+	
+		<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+		<!-- util中依赖的包 -->
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		    <version>1.10</version>
+		</dependency><!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+		<dependency>
+		    <groupId>org.bouncycastle</groupId>
+		    <artifactId>bcprov-jdk15on</artifactId>
+		    <version>1.60</version>
+		</dependency>
+		
+		<!--WechatLoginController中依赖的包  -->
+		<!-- JSONObject对象依赖的jar包 -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ezmorph</groupId>
+			<artifactId>ezmorph</artifactId>
+			<version>1.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.2.3</version>
+			<classifier>jdk15</classifier>
+		</dependency>
+		
+	
+		<!--依赖service包 -->
 		<dependency>
 			<groupId>com.wesharing</groupId>
-			<artifactId>wesharing-model</artifactId>
+			<artifactId>wesharing-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
@@ -129,11 +173,13 @@
 			<version>${mybatis-spring.version}</version>
 		</dependency>
 
-
-		<!-- 添加service依赖 start ======================= -->
-		<!-- <dependency> <artifactId>edu-service</artifactId> <groupId>com.yuxiu.edu</groupId> 
-			<version>1.0-SNAPSHOT</version> </dependency> -->
-
+		<!-- https://mvnrepository.com/artifact/org.apache.ibatis/ibatis-core -->
+		<!-- <dependency>
+		    <groupId>org.apache.ibatis</groupId>
+		    <artifactId>ibatis-core</artifactId>
+		    <version>3.0</version>
+		</dependency> -->
+		
 
 		<!-- 数据库驱动 -->
 		<dependency>
@@ -142,11 +188,19 @@
 			<version>${mysql.version}</version>
 		</dependency>
 		<!-- 数据连接池 -->
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
 			<version>${c3p0.version}</version>
+		</dependency> -->
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-dbcp2</artifactId>
+		    <version>2.1.1</version>
 		</dependency>
+		
 
 		<!-- jstl标签类 -->
 		<dependency>
