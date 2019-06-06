@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wesharing.dao.SharedMapper">
+
+	<resultMap type="Shared" id="SharedWithOtherResult">
+		<id property="uuid" column="uuid" />
+		<!-- <result property="user_id" column="user_id" /> -->
+		<result property="name" column="name" />
+		<result property="price" column="price" />
+		<result property="price_unit" column="price_unit" />
+		<result property="detail" column="detail" />
+		<result property="publish_time" column="publish_time" />
+		<result property="distance_lat" column="distance_lat" />
+		<result property="distance_lng" column="distance_lng" />
+		<result property="page_views" column="page_views" />
+		<result property="intention" column="intention" />
+		<result property="shared_state" column="shared_state" />
+
+		<association property="user" javaType="User">
+			<id property="uuid" column="user_id" />
+			<result property="name" column="user_name" />
+			<result property="image_url" column="user_image_url" />
+		</association>
+
+		<collection property="images" ofType="SharedImage">
+			<id property="uuid" column="image_uuid" />
+			<result property="is_cover" column="is_cover" />
+			<result property="image_url" column="image_url" />
+			<result property="image_width" column="image_width" />
+			<result property="image_height" column="image_height" />
+		</collection>
+	</resultMap>
+
+	<resultMap type="SharedComment" id="SharedCommentWithUser">
+		<id property="uuid" column="uuid" />
+		<result property="shared_id" column="shared_id" />
+		<result property="content" column="content" />
+		<result property="publish_time" column="publish_time" />
+		<association property="user" javaType="User">
+			<id property="uuid" column="user_id" />
+			<result property="name" column="user_name" />
+			<result property="image_url" column="user_image_url" />
+		</association>
+	</resultMap>
+
+	<select id="getSharedList" resultMap="SharedWithOtherResult">
+		select a.*,b.uuid as
+		image_uuid,b.image_url,b.is_cover,b.image_width,b.image_height
+		from
+		shared a,shared_images b
+		where a.uuid = b.shared_id and b.is_cover = 1
+		order by a.publish_time desc
+	</select>
+
+	<select id="getSharedById" resultMap="SharedWithOtherResult">
+		select
+		a.*,b.uuid as
+		image_uuid,b.image_url,b.is_cover,b.image_width,b.image_height,
+		c.name
+		as user_name, c.image_url as user_image_url from
+		shared
+		a,shared_images
+		b,user c where a.uuid = b.shared_id and a.uuid = #{id}
+	</select>
+
+	<select id="getSharedCommentCountBySharedId"
+		parameterType="String" resultType="Integer">
+		select count(1)
+		from shared_comments a,user b
+		where shared_id = #{shared_id} and a.user_id = b.uuid
+	</select>
+
+
+	<select id="getSharedCommentsBySharedId"
+		resultMap="SharedCommentWithUser">
+		select a.*,b.name as user_name,b.image_url as user_image_url
+		from shared_comments a INNER JOIN user b
+		where shared_id = #{shared_id}
+		and a.user_id = b.uuid
+		order by a.publish_time desc
+		limit
+		#{start},#{num}
+	</select>
+
+	<insert id="insertComment" parameterType="SharedComment">
+		insert into
+		shared_comments (uuid,shared_id,user_id,content)
+		values
+		(#{uuid},#{shared_id},#{user_id},#{content})
+	</insert>
+	
+	<insert id="publishSharedWithoutImagesViodes" parameterType="Shared">
+		insert into 
+		shared (uuid,user_id,name,price,price_unit,detail,publish_time,distance_lat,distance_lng,page_views,intention,shared_state)
+		values
+		(#{uuid},#{user_id},#{name},#{price},#{price_unit},#{detail},#{publish_time},#{distance_lat},#{distance_lng},0,0,0)
+	</insert>
+	
+	<insert id="publishSharedWithImage" parameterType="SharedImage">
+		insert into
+		shared_images (uuid,shared_id,is_cover,image_url)
+		values
+		(#{uuid},#{shared_id},#{is_cover},#{image_url})
+		
+	</insert>
+
+
+</mapper>
