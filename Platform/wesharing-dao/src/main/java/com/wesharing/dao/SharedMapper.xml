@@ -85,9 +85,9 @@
 
 	<insert id="insertComment" parameterType="SharedComment">
 		insert into
-		shared_comments (uuid,shared_id,user_id,content)
+		shared_comments (uuid,shared_id,user_id,content,publish_time)
 		values
-		(#{uuid},#{shared_id},#{user_id},#{content})
+		(#{uuid},#{shared_id},#{user_id},#{content},#{publish_time})
 	</insert>
 	
 	<insert id="publishSharedWithoutImagesViodes" parameterType="Shared">
@@ -99,9 +99,9 @@
 	
 	<insert id="publishSharedWithImage" parameterType="SharedImage">
 		insert into
-		shared_images (uuid,shared_id,is_cover,image_url)
+		shared_images (uuid,shared_id,is_cover,image_url,image_width,image_height)
 		values
-		(#{uuid},#{shared_id},#{is_cover},#{image_url})
+		(#{uuid},#{shared_id},#{is_cover},#{image_url},#{image_width},#{image_height})
 		
 	</insert>
 

@@ -23,7 +23,7 @@ import net.sf.json.JSONObject;
 public class WechatLoginControllerImpl implements IWechatLoginController {
 	
 	@Autowired
-	IUserService userService;
+	IUserService userService; 
 	@Override
 	@RequestMapping(value = "/decodeUserInfo",method = RequestMethod.GET)
 	public Map decodeUserInfo(String encryptedData, String iv, String code) {

@@ -20,7 +20,7 @@ import com.wesharing.controller.ISharedController;
 import com.wesharing.model.Shared;
 import com.wesharing.model.SharedComment;
 import com.wesharing.model.SharedImage;
-import com.wesharing.service.ISharedService;
+import com.wesharing.service.ISharedService; 
 
 @RestController
 public class SharedControllerImpl implements ISharedController {
@@ -37,6 +37,7 @@ public class SharedControllerImpl implements ISharedController {
 	@Override
 	@RequestMapping("/getSharedById")
 	public Shared getSharedById(String id) {
+		System.out.println(sharedService.getSharedById(id).getPublish_time());
 		return sharedService.getSharedById(id);
 	}
 	
@@ -61,6 +62,9 @@ public class SharedControllerImpl implements ISharedController {
 		Random r = new Random(100);
 		String uuid = r.toString();
 		sharedComment.setUuid(uuid);
+		Date date = new Date();
+		String publish_time = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(date);
+		sharedComment.setPublish_time(publish_time);
 		return sharedService.insertComment(sharedComment);
 	}
 
@@ -71,7 +75,7 @@ public class SharedControllerImpl implements ISharedController {
 		String uuid = UUID.randomUUID().toString();
 		shared.setUuid(uuid);
 		Date date = new Date();
-		String publish_time = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss").format(date);
+		String publish_time = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(date);
 		shared.setPublish_time(publish_time);
 		int succ = sharedService.publishSharedWithoutImagesViodes(shared);
 		if(succ > 0) {
@@ -92,9 +96,14 @@ public class SharedControllerImpl implements ISharedController {
 				String ext = FilenameUtils.getExtension(pictureFile.getOriginalFilename());
 				//设置图片上传路径
 				String url = request.getSession().getServletContext().getRealPath("/upload");
+//				String url = "http://120.92.182.201:8686/wesharing/upload";
 				System.out.println(url);
 				String image_url = url+"/"+name + "." + ext;
 				//以绝对路径保存重名命后的图片
+				
+				//TODO
+				//图片需要进行压缩
+				
 				try {
 					pictureFile.transferTo(new File(image_url));
 				} catch (IllegalStateException | IOException e) {
@@ -103,7 +112,7 @@ public class SharedControllerImpl implements ISharedController {
 				}
 				
 				sharedImage.setUuid(name);
-				sharedImage.setImage_url(image_url);
+				sharedImage.setImage_url("http://120.92.182.201:8686/wesharing/upload"+"/"+name + "." + ext);
 				System.out.println(sharedImage);
 				
 				return sharedService.publishSharedWithImage(sharedImage);

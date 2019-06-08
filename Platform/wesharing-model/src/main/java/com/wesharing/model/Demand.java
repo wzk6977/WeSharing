@@ -1,25 +1,21 @@
 package com.wesharing.model;
 
-import java.util.List;
-
-public class Shared {
+public class Demand {
+	
 	private String uuid;
 	private String user_id;
 	private String name;
 	private double price;
-	private String price_unit;
 	private String detail;
 	private String publish_time;
-	private String distance;
 	private String distance_lat;
 	private String distance_lng;
 	private int page_views;
 	private int intention;
-	private int shared_state;
+	private int demand_state;
+	
 	private User user;
-	private List<SharedImage> images;
-	private List<SharedVideo> videos;
-	private List<SharedComment> comments;
+	
 	public String getUuid() {
 		return uuid;
 	}
@@ -44,12 +40,6 @@ public class Shared {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public String getPrice_unit() {
-		return price_unit;
-	}
-	public void setPrice_unit(String price_unit) {
-		this.price_unit = price_unit;
-	}
 	public String getDetail() {
 		return detail;
 	}
@@ -61,12 +51,6 @@ public class Shared {
 	}
 	public void setPublish_time(String publish_time) {
 		this.publish_time = publish_time;
-	}
-	public String getDistance() {
-		return distance;
-	}
-	public void setDistance(String distance) {
-		this.distance = distance;
 	}
 	public String getDistance_lat() {
 		return distance_lat;
@@ -92,11 +76,11 @@ public class Shared {
 	public void setIntention(int intention) {
 		this.intention = intention;
 	}
-	public int getShared_state() {
-		return shared_state;
+	public int getDemand_state() {
+		return demand_state;
 	}
-	public void setShared_state(int shared_state) {
-		this.shared_state = shared_state;
+	public void setDemand_state(int demand_state) {
+		this.demand_state = demand_state;
 	}
 	public User getUser() {
 		return user;
@@ -104,32 +88,13 @@ public class Shared {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public List<SharedImage> getImages() {
-		return images;
-	}
-	public void setImages(List<SharedImage> images) {
-		this.images = images;
-	}
-	public List<SharedVideo> getVideos() {
-		return videos;
-	}
-	public void setVideos(List<SharedVideo> videos) {
-		this.videos = videos;
-	}
-	public List<SharedComment> getComments() {
-		return comments;
-	}
-	public void setComments(List<SharedComment> comments) {
-		this.comments = comments;
-	}
 	@Override
 	public String toString() {
-		return "Shared [uuid=" + uuid + ", user_id=" + user_id + ", name=" + name + ", price=" + price + ", price_unit="
-				+ price_unit + ", detail=" + detail + ", publish_time=" + publish_time + ", distance=" + distance
-				+ ", distance_lat=" + distance_lat + ", distance_lng=" + distance_lng + ", page_views=" + page_views
-				+ ", intention=" + intention + ", shared_state=" + shared_state + ", user=" + user + ", images="
-				+ images + ", videos=" + videos + ", comments=" + comments + "]";
+		return "Demand [uuid=" + uuid + ", user_id=" + user_id + ", name=" + name + ", price=" + price + ", detail="
+				+ detail + ", publish_time=" + publish_time + ", distance_lat=" + distance_lat + ", distance_lng="
+				+ distance_lng + ", page_views=" + page_views + ", intention=" + intention + ", demand_state="
+				+ demand_state + ", user=" + user + "]";
 	}
 	
-	
+
 }

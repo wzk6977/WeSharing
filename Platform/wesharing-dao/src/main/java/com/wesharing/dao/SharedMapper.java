@@ -29,8 +29,6 @@ public interface SharedMapper{
 	int publishSharedWithoutImagesViodes(Shared shared);
 	
 //	·¢²¼¹²Ïí£¨Í¼Æ¬£©
-	int publishSharedWithoutImage(SharedImage sharedImage);
-
 	int publishSharedWithImage(SharedImage sharedImage);
 	
 }

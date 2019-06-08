@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wesharing.dao.DemandMapper">
+
+	<resultMap type="Demand" id="DemandWithUser">
+		<id property="uuid" column="uuid"/>
+		<result property="user_id" column="user_id"/>
+		<result property="name" column="name"/>
+		<result property="price" column="price"/>
+		<result property="detail" column="detail"/>
+		<result property="publish_time" column="publish_time"/>
+		<result property="distance_lat" column="distance_lat" />
+		<result property="distance_lng" column="distance_lng" />
+		<result property="page_views" column="page_views" />
+		<result property="intention" column="intention" />
+		<result property="demand_state" column="demand_state"/>
+		
+		<association property="user" javaType="User">
+			<result property="name" column="user_name"/>
+			<result property="gender" column="gender"/>
+			<result property="image_url" column="image_url"/>
+		</association>
+	</resultMap>
+
+
+	<select id="getDemandList" resultMap="DemandWithUser">
+		select a.*,b.name as user_name,b.gender,b.image_url
+		from demand a,user b
+		where a.user_id = b.uuid
+		order by a.publish_time desc
+	</select>
+	
+	<insert id="publishDemand" parameterType="Demand">
+		insert into
+		demand (uuid,user_id,name,price,detail,publish_time,distance_lat,distance_lng,page_views,intention,demand_state)
+		values (#{uuid},#{user_id},#{name},#{price},#{detail},#{publish_time},#{distance_lat},#{distance_lng},0,0,0) 
+	</insert>
+
+
+</mapper>
